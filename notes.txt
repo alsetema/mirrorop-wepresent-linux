@@ -1,0 +1,3 @@
+passcode used was 5128
+
+Streaming works by sending an h.264 stream to port 515, but prefixed by a handshake, can be found by looking for h.264 stream start with 0000 0001 0605 ffff bytes
