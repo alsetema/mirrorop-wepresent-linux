@@ -1,3 +1,8 @@
 passcode used was 5128
 
-Streaming works by sending an h.264 stream to port 515, but prefixed by a handshake, can be found by looking for h.264 stream start with 0000 0001 0605 ffff bytes
+Streaming works by sending an h.264 stream to port 515, but prefixed by a handshake, can be found by looking for h.264 stream start with 0000 0001 0605 ffff bytes.
+
+The handshake starts with the client receiving "wppib" followed by some bytes, after which the client sends "SenderId", followed by the ID that was received as part of the login handshake, and bytes to pad the length of the packet to 32 (MUST VERIFY THIS CLAIM). 
+
+In the login/command and control stream (to port 3268), commands seem to be prefixed by "wppcmd", and then three bytes indicating the command that is to be executed. 
+Other command strings are wppaliveROCK and wppaliveROLL, which seem to act as a ping-pong/keepalive mechanism.
