@@ -1,5 +1,15 @@
 passcode used was 5128
 
+Ports used, and apparent purpose:
+    - 398: unclear, maybe some kind of "initial check", or legacy?
+    - 515: authentication-like handshake (with SenderId/UID obtained from connection to 3268), followed by h.264 stream, acknowledged by serverside using "wppibXXXX" packets
+    - 1234: see 398
+    - 1688: some kind of audio stream, perhaps? Seems legacy, as h.264 includes audio
+    - 3268: log in using code, obtain UID, exchange information and some sort of command and control protocol
+    - 6542: see 398
+    - 8080: legacy/alternative to 515, also begins with "wppibXXXX" from serverside
+    - 31865: unused
+
 Streaming works by sending an h.264 stream to port 515, but prefixed by a handshake, can be found by looking for h.264 stream start with 0000 0001 0605 ffff bytes.
 
 The handshake starts with the client receiving "wppib" followed by some bytes, after which the client sends "SenderId", followed by the ID that was received as part of the login handshake, and bytes to pad the length of the packet to 32 (MUST VERIFY THIS CLAIM). 
