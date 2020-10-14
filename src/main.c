@@ -8,7 +8,6 @@ int socket1;
 int socket2;
 int socket3;
 
-//fuck i cant remember shit, ask jona
 int main(int argc, char *argv[]) {
     const char ip[] = "127.0.0.1";
     uint16_t port = 5555;
@@ -18,7 +17,7 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in addr2;
     struct sockaddr_in addr3;
 
-    int result1 = get_in_addr(ip, port, addr1);
+    int result1 = get_in_addr(ip, port, &addr1);
     int fd = open_tcp_socket(addr1, sizeof(struct sockaddr_in));
 
     if (fd == SOCKET_FAILED_CONNECT) {

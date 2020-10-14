@@ -23,7 +23,7 @@ int open_tcp_socket(struct sockaddr_in addr, int sockaddr_len) {
 
 int get_in_addr(const char ip[], unsigned short port, struct sockaddr_in *socket_location) {
     //check that the ip is ok or not
-    int ip_ok = inet_aton(ip, &socket_location->sin_addr.s_addr);   
+    int ip_ok = inet_aton(ip, &socket_location->sin_addr);   
     if (!ip_ok) {
         return BAD_IP;
     }

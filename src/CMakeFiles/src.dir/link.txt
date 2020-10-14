@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/src.dir/main.c.o CMakeFiles/src.dir/net.c.o -o src 
