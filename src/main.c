@@ -13,14 +13,15 @@ int main(int argc, char *argv[]) {
     const char ip[] = "127.0.0.1";
     uint16_t port = 5555;
 
-    struct sockaddr_in remote_addr;
-    remote_addr.sin_family = AF_INET;
-    remote_addr.sin_addr.s_addr = inet_addr(ip);
-    remote_addr.sin_port = htons(port);
 
-    int fd = open_tcp_socket(remote_addr, sizeof(struct sockaddr_in));
+    struct sockaddr_in addr1;
+    struct sockaddr_in addr2;
+    struct sockaddr_in addr3;
 
-    if (fd == SOCKET_FAILED_SOCKET) {
+    int result1 = get_in_addr(ip, port, addr1);
+    int fd = open_tcp_socket(addr1, sizeof(struct sockaddr_in));
+
+    if (fd == SOCKET_FAILED_CONNECT) {
         printf("Failed to create socket!\n");
         return 1;
     }

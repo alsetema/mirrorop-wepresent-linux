@@ -1,0 +1,3 @@
+/home/alsetema/git projects/opmirror-linux/src/CMakeFiles/rebuild_cache.dir
+/home/alsetema/git projects/opmirror-linux/src/CMakeFiles/edit_cache.dir
+/home/alsetema/git projects/opmirror-linux/src/CMakeFiles/src.dir
