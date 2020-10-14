@@ -10,7 +10,7 @@ int socket3;
 
 //fuck i cant remember shit, ask jona
 int main(int argc, char *argv[]) {
-    const char *ip = "127.0.0.1";
+    const char ip[] = "127.0.0.1";
     uint16_t port = 5555;
 
     struct sockaddr_in remote_addr;
