@@ -4,6 +4,10 @@
 #include <getopt.h>
 #include "net.h"
 
+#define MAJOR 0
+#define MINOR 0
+#define REV 1
+
 
 int socket1;
 int socket2;
@@ -14,24 +18,32 @@ const struct option long_options[] = {
         {0, 0,                      0, 0}
 };
 
+void print_help(char *name){
+    printf("OpMirror V%d.%d.%d help menu.\n", MAJOR, MINOR, REV);
+    printf("Format: %s [options] <host>\n", name);
+    printf("Available options:\n");
+    printf("    -h            print this help menu and exit\n");
+    printf("    -c [code]\n");
+    printf("    --code [code] The authentication code to use\n");
+}
+
 int main(int argc, char *argv[]) {
     char *ip;
     char *code;
     uint16_t port = 5555;
     int option;
-    while ((option = getopt_long(argc, argv, "hc:", long_options, NULL)) != -1) {
+    while ((option = getopt_long(argc, argv, ":hc:", long_options, NULL)) != -1) {
         switch (option) {
             case 'c': {
                 code = optarg;
                 break;
             }
             case 'h': {
-                // TODO print help
-                break;
+                print_help(argv[0]);
+                return 0;
             }
             default: {
-                // TODO print unknown option X, print help
-                printf("Unknown option! Use -h for help\n");
+                print_help(argv[0]);
                 return 1;
             }
         }
