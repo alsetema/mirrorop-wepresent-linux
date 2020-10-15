@@ -16,3 +16,66 @@ The handshake starts with the client receiving "wppib" followed by some bytes, a
 
 In the login/command and control stream (to port 3268), commands seem to be prefixed by "wppcmd", and then three bytes indicating the command that is to be executed. 
 Other command strings are wppaliveROCK and wppaliveROLL, which seem to act as a ping-pong/keepalive mechanism.
+
+Known commands (port 3268):
+    Serverbound (from client):
+        - wppaliveROCK
+            "ping"
+        - wppcmd \x00 \x00 \x90
+            Request info?
+        - wppcmd \x00 \x00 \x80
+            Request padding data/statistics?
+        - wppcmd \x00 \x00 \x92 <data>
+            Identify and authenticate 
+            Data: 
+                48 bytes of name string, NULL terminated
+                4 bytes of unknown data (possibly length/checksum indicators)
+                4 byte authentication code in ASCII (may possibly extend up to 8 bytes)
+                64 or 72 bytes of unknown data (length depends on authentication number)
+            Client terminates and reconnects after sending this 1st time
+        - wppcmd \x00 \x00 \xb2
+            Request UID (this may require \x00 \x00 \x92 to be successful on the same connection before yielding a valid response)
+        - wppcmd \x00 \x00 \xc0 <data>
+            Unclear, but contains "BS_DISABLE" at the end, may indicate ending/start of broadcast related activity
+            (has no response)
+            Sent right before the initial packet of data/handshake data to port 515
+        - wppcmd \x00 \x00 \x88 \x80
+            Unclear
+            
+    Clientbound (from server):
+        - wppaliveROLL
+            Response to wppaliveROCK
+            "pong"
+        - wppcmd \x00 \x00 \x91 <data>
+            Response to wppcmd \x00 \x00 \x90
+            Info response
+            First some kind of data? Then the length of the following block of data, minus 1 byte for the length (39 = 40 - 1), followed by the name of the display as a string, prefixed by the length (in our case: 0x0c = 12 characters = length of name), so:
+            0x27 0x0c <39 bytes of data, starting with <12 bytes of name data>>
+              39   12 
+        - wppcmd \x00 \x00 \x81
+            Response to wppcmd \x00 \x00 \x80
+            quite a bit of data, unclear purpose (but is the same accross multiple connections and requests)
+        - wppcmd \x00 \x00 \x93 <1 byte>
+            Response to wppcmd \x00 \x00 \x92
+            Authentication successful
+            byte is a boolean value. 1 = code was correct, 2 = code is incorrect
+        - wppcmd \x00 \x00 \xb3 <4 bytes of data>
+            response to wppcmd \x00 \x00 \xb2
+            data is 4 byte LSB-ordered 32 bit integer representing UID
+        - wppcmd \x00 \x00 \x89 <1 byte (data ?)>
+            Response to wppcmd \x00 \x00 \x88
+            
+Know commands (port 515):
+    Actually not just h264, but most likely Awind Protocol
+    Serverbound (from client):
+        - SenderId <4 bytes of data> <padded to 32 bytes)
+            Data is 32 bit LSB integer, representing UID, as received in handshake (see  wppcmd \x00 \x00 \xb3/\xb2)
+        - AWINDIB <data> IBTAIL
+            Total 112 bytes of header data per frame (AWINDIB + other stuff)
+            Seems like some kind of wrapped h264 data
+            After AWINDIB, 15 bytes (maybe 16) of some kind of static data (protocol version?), the same for each frame transmitted
+            Tail starts with \x80 \x00 \x01 \x00 \x01, then 27 times \x00, then IBTAIL in ASCII for a total of 32 + 6 = 38 bytes
+    Clientbound (from server):
+        - wppib \x00 \x00 \x10 <4 bytes of data>
+            Some kind of frame/transmission tracker
+            Data is a 32 bit MSB integer            
