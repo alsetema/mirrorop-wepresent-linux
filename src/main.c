@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     int result1 = get_in_addr(ip, port, &addr1);
     int fd = open_tcp_socket(addr1, sizeof(struct sockaddr_in));
 
-    if (fd == SOCKET_FAILED_CONNECT) {
+    if (fd == SOCKET_FAILED_CREATE) {
         printf("Failed to create socket!\n");
         return 1;
     }
