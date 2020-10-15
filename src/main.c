@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <getopt.h>
 #include "net.h"
 
 
@@ -8,10 +9,44 @@ int socket1;
 int socket2;
 int socket3;
 
-int main(int argc, char *argv[]) {
-    const char ip[] = "127.0.0.1";
-    uint16_t port = 5555;
+const struct option long_options[] = {
+        {"code", required_argument, 0, 'c'},
+        {0, 0,                      0, 0}
+};
 
+int main(int argc, char *argv[]) {
+    char *ip;
+    char *code;
+    uint16_t port = 5555;
+    int option;
+    while ((option = getopt_long(argc, argv, "hc:", long_options, NULL)) != -1) {
+        switch (option) {
+            case 'c': {
+                code = optarg;
+                break;
+            }
+            case 'h': {
+                // TODO print help
+                break;
+            }
+            default: {
+                // TODO print unknown option X, print help
+                printf("Unknown option! Use -h for help\n");
+                return 1;
+            }
+        }
+    }
+    // "Skip over" all the arguments that getopt() has scanned
+    argv = argv + optind;
+    // Adjust the amount of leftover arguments appropriately
+    argc = argc - optind;
+
+    if (argc != 1) {
+        printf("Missing required host argument.\n");
+        return 1;
+    }
+
+    ip = argv[0];
 
     struct sockaddr_in addr1;
     struct sockaddr_in addr2;
@@ -19,7 +54,7 @@ int main(int argc, char *argv[]) {
 
     int result1 = get_in_addr(ip, port, &addr1);
 
-    if (result1 != 0){
+    if (result1 != 0) {
         printf("Invalid address or port!\n");
         return 1;
     }

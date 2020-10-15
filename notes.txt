@@ -1,7 +1,7 @@
 passcode used was 5128
 
 Ports used, and apparent purpose:
-    - 398: unclear, maybe some kind of "initial check", or legacy?
+    - 389: unclear, maybe some kind of "initial check", or legacy? Could also be required to associate/enable a client to be connected on port 515
     - 515: authentication-like handshake (with SenderId/UID obtained from connection to 3268), followed by h.264 stream, acknowledged by serverside using "wppibXXXX" packets
     - 1234: see 398
     - 1688: some kind of audio stream, perhaps? Seems legacy, as h.264 includes audio
