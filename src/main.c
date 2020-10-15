@@ -18,6 +18,12 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in addr3;
 
     int result1 = get_in_addr(ip, port, &addr1);
+
+    if (result1 != 0){
+        printf("Invalid address or port!\n");
+        return 1;
+    }
+
     int fd = open_tcp_socket(addr1, sizeof(struct sockaddr_in));
 
     if (fd == SOCKET_FAILED_CREATE) {
