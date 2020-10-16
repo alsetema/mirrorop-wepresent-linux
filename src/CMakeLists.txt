@@ -4,4 +4,4 @@ project(opmirror C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(opmirror
-        main.c net.c net.h protocol.h protocol.c)
+        main.c net.c net.h protocol.h protocol.c awindib-protocol.h)
