@@ -1,8 +1,5 @@
-//
-// Created by jona on 10/14/20.
-//
-
 #include "net.h"
+
 int open_tcp_socket(struct sockaddr_in addr, int sockaddr_len) {
     int fd = socket(AF_INET, SOCK_STREAM, 0);
 

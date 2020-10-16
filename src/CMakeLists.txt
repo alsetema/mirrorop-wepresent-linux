@@ -4,4 +4,4 @@ project(opmirror C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(opmirror
-        main.c net.c net.h)
+        main.c net.c net.h protocol.h protocol.c)
