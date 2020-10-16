@@ -1,3 +1,4 @@
 *.pcapng
 CMakeFiles/
-test.h264
+*.h264
+*.mp4
