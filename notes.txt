@@ -71,10 +71,10 @@ Know commands (port 515):
         - SenderId <4 bytes of data> <padded to 32 bytes)
             Data is 32 bit LSB integer, representing UID, as received in handshake (see  wppcmd \x00 \x00 \xb3/\xb2)
         - AWINDIB <data> IBTAIL
-            Total 112 bytes of header data per frame (AWINDIB + other stuff)
-            Seems like some kind of wrapped h264 data
+            Total 46 bytes of header data per frame (AWINDIB + other stuff)
             After AWINDIB, 15 bytes (maybe 16) of some kind of static data (protocol version?), the same for each frame transmitted
-            Tail starts with \x80 \x00 \x01 \x00 \x01, then 27 times \x00, then IBTAIL in ASCII for a total of 32 + 6 = 38 bytes
+            At index 29, the length of the current frame (excluding tail) is included as a 32 bit MSB integer, repeated twice
+            Tail starts with a 4-byte MSB frame counter at 42 bytes from the end (how many awind frames) and ends with IBTAIL
     Clientbound (from server):
         - wppib \x00 \x00 \x10 <4 bytes of data>
             Some kind of frame/transmission tracker
