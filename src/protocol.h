@@ -2,6 +2,7 @@
 #define OPMIRROR_PROTOCOL_H
 
 #define C_STR 'w', 'p', 'p'
+#define CMD_STR C_STR, 'c', 'm', 'd'
 
 extern const int CMD_CLIENT_ROCK_SIZE;
 extern const unsigned char CMD_CLIENT_ROCK[];
