@@ -4,8 +4,11 @@
 #include <string.h>
 #include "awindib-protocol.h"
 
-            //               Space character              Data ln?        Data ln Data ln
-            // A W I N D I B _                            b1b2b3b4        b1b2b3b4b1b2b3b4 V S M K . 2 A  <non-header data?> <trailer>
+            //                                         Data ln         Data ln Data ln
+            // A W I N D I Bv1v2v3v4                   b1b2b3b4        b1b2b3b4b1b2b3b4 V S M K . 2 A _
+            // <non-header data?> 
+            // Frame num
+            //b1b2b3b4__cnstcnst<27 0x00 bytes>IBTAIL (cnst = constant = 0x0100)
 char *pkt1 = "4157494e4449422007000000271000000000077f04370000005500000c0b000000550000005556534d4b0132419a"
              "00000001093000000106010305202080000001419a40268033a7e01593f00a39f80208edc640bb0289f80873f004ea7cb102f9df3f0d1f8022f3f00821f6c0789f80130cfe7f3f0047a7e0044d3f01f27ecfc00acd"
              "00000053800001000100000000000000000000000000000000000000000000000000000049425441494c";
