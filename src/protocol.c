@@ -12,6 +12,9 @@ const int CMD_CLIENT_INFO_REQ_SIZE = sizeof(CMD_CLIENT_INFO_REQ);
 const unsigned char CMD_CLIENT_AUTH_REQ[] = {CMD_STR, 0x00, 0x00, 0x92};
 const int CMD_CLIENT_AUTH_REQ_SIZE = sizeof(CMD_CLIENT_AUTH_REQ);
 
+const unsigned char CMD_CLIENT_UNKNOWN[] = {CMD_STR, 0x00, 0x00, 0x80};
+const int CMD_CLIENT_UNKNOWN_SIZE = sizeof(CMD_CLIENT_UNKNOWN);
+
 const unsigned char CMD_CLIENT_UID_REQ[] = {CMD_STR, 0x00, 0x00, 0xB2};
 const int CMD_CLIENT_UID_REQ_SIZE = sizeof(CMD_CLIENT_UID_REQ);
 
