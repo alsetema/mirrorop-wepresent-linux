@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <getopt.h>
+#include <stdlib.h>
+#include <threads.h>
 #include "net.h"
 
 #define MAJOR 0
@@ -82,14 +84,23 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    uint8_t value[1];
-    while (1) {
-        int read_bytes = read(cmd_socket, value, 1);
-        if (read_bytes > 0) {
-            printf("%c", value[0]);
+    int buffer_size = 1000;
+    int *buffer = malloc(buffer_size);
+    while(0 == 0) {
+        int read_result = read(cmd_socket, buffer, buffer_size);
+        if (read_result > 0) {
+
+            printf("%*.s",read_result, buffer);
+            write(cmd_socket, buffer, read_result);
+        
         } else {
             break;
         }
+        
+
     }
+    
     return 0;
+
+
 }
