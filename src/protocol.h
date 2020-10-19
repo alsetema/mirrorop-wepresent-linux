@@ -13,6 +13,9 @@ extern const unsigned char CMD_CLIENT_INFO_REQ[];
 extern const int CMD_CLIENT_AUTH_REQ_SIZE;
 extern const unsigned char CMD_CLIENT_AUTH_REQ[];
 
+extern const int CMD_CLIENT_UNKNOWN_SIZE;
+extern const unsigned char CMD_CLIENT_UNKNOWN[];
+
 extern const int CMD_CLIENT_UID_REQ_SIZE;
 extern const unsigned char CMD_CLIENT_UID_REQ[];
 
