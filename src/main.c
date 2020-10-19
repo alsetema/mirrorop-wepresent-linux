@@ -9,9 +9,8 @@
 #define REV 1
 
 
-int socket1;
-int socket2;
-int socket3;
+int cmd_socket;
+int video_socket;
 
 const struct option long_options[] = {
         {"code", required_argument, 0, 'c'},
@@ -30,7 +29,8 @@ void print_help(char *name){
 int main(int argc, char *argv[]) {
     char *ip;
     char *code;
-    uint16_t port = 5555;
+    uint16_t cmd_control_port = 3286;
+    uint16_t video_port = 515;
     int option;
     while ((option = getopt_long(argc, argv, ":hc:", long_options, NULL)) != -1) {
         switch (option) {
@@ -60,32 +60,31 @@ int main(int argc, char *argv[]) {
 
     ip = argv[0];
 
-    struct sockaddr_in addr1;
-    struct sockaddr_in addr2;
-    struct sockaddr_in addr3;
+    struct sockaddr_in cmd_addr;
+    struct sockaddr_in video_addr;
 
-    int result1 = get_in_addr(ip, port, &addr1);
+    int sockaddr_result = get_in_addr(ip, cmd_control_port, &cmd_addr);
 
-    if (result1 != 0) {
-        printf("Invalid address or port!\n");
+    if (sockaddr_result != 0) {
+        printf("Invalid address\n");
         return 1;
     }
 
-    int fd = open_tcp_socket(addr1, sizeof(struct sockaddr_in));
+    cmd_socket = open_tcp_socket(cmd_addr, sizeof(struct sockaddr_in));
 
-    if (fd == SOCKET_FAILED_CREATE) {
+    if (cmd_socket == SOCKET_FAILED_CREATE) {
         printf("Failed to create socket!\n");
         return 1;
     }
 
-    if (fd == SOCKET_FAILED_CONNECT) {
+    if (cmd_socket == SOCKET_FAILED_CONNECT) {
         printf("Failed to connect!\n");
         return 1;
     }
 
     uint8_t value[1];
     while (1) {
-        int read_bytes = read(fd, value, 1);
+        int read_bytes = read(cmd_socket, value, 1);
         if (read_bytes > 0) {
             printf("%c", value[0]);
         } else {

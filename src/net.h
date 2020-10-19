@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <unistd.h>
 
 #define SOCKET_FAILED_CREATE  -1
 #define SOCKET_FAILED_CONNECT -2

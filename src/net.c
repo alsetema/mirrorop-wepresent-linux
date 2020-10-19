@@ -12,6 +12,7 @@ int open_tcp_socket(struct sockaddr_in addr, int sockaddr_len) {
     int connection_successful = connect(fd, (struct sockaddr *) &addr, sockaddr_len);
 
     if (connection_successful < 0) {
+        close(fd); //maybe in the future
         return SOCKET_FAILED_CONNECT;
     }
 
