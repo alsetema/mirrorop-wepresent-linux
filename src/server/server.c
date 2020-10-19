@@ -3,8 +3,8 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
-#include "net.h"
-#include "protocol.h"
+#include "../net.h"
+#include "../protocol.h"
 
 int cmp(const uint8_t *data, const uint8_t *otherdata, int length) {
     for (int i = 0; i < length; i++) {

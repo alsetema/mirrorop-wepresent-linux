@@ -14,4 +14,4 @@ add_executable(packet-dissector packet-dissector.c awindib-protocol.h awindlib-p
 project(server C)
 set(CMAKE_C_STANDARD 11)
 
-add_executable(server server.c net.h net.c protocol.h protocol.c)
+add_executable(server server/server.c net.h net.c protocol.h protocol.c)
