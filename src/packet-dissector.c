@@ -47,7 +47,7 @@ uint8_t *hex_to_bin(unsigned int *size, char *hex) {
 }
 
 void print_array(uint8_t *values, unsigned int count) {
-    printf("const uint8_t *array = ");
+    printf("const uint8_t *info_response = ");
     for (int i = 0; i < count; i++) {
         if (i == 0) {
             printf("{");
